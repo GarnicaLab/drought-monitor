@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Columbia Basin drought tracking — Garnica Lab, WSU</title>
+<style>
+  :root{
+    --paper:#F7F5F0; --forest:#1E3B37; --pine:#2F6B63; --terra:#BE7350;
+    --ink:#3A4A46; --muted:#6E7D78; --rule:#DDD7CB;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);line-height:1.6;
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  .wrap{max-width:980px;margin:0 auto;padding:40px 22px 70px}
+  header{border-bottom:2px solid var(--forest);padding-bottom:18px;margin-bottom:32px}
+  .eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--pine);font-weight:700;margin:0 0 8px}
+  h1{margin:0 0 10px;color:var(--forest);font-size:32px;letter-spacing:-.02em}
+  .sub{margin:0;color:var(--muted);font-size:16px;max-width:62ch}
+  figure{margin:0 0 42px}
+  figure img{width:100%;height:auto;display:block;border:1px solid var(--rule);background:#fff}
+  figcaption{font-size:13.5px;color:var(--muted);margin-top:10px}
+  h2{color:var(--forest);font-size:20px;margin:0 0 10px;letter-spacing:-.01em}
+  .note{border-left:3px solid var(--terra);padding:12px 16px;background:#fff;
+    font-size:14px;margin:0 0 40px}
+  footer{border-top:1px solid var(--rule);padding-top:18px;font-size:13px;color:var(--muted)}
+  a{color:var(--pine)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">Garnica Lab &middot; WSU Department of Plant Pathology</p>
+  <h1>Columbia Basin drought tracking</h1>
+  <p class="sub">Weekly U.S. Drought Monitor conditions for the Washington counties where
+  potatoes are grown. Figures rebuild automatically every Thursday.</p>
+</header>
+
+<div class="note">
+  <strong>How to read these.</strong> The U.S. Drought Monitor reports the percent of
+  <em>land area</em> in each category, not the percent of potato acreage. Columbia Basin
+  potatoes are irrigated, so drought category here reflects water supply and allocation
+  risk rather than water stress in a managed field.
+</div>
+
+<figure>
+  <h2>Where the basin stands now</h2>
+  <img src="drought-basin-current.png" alt="Percent of Columbia Basin area in each drought category this week, three months ago, and one year ago">
+  <figcaption>This week compared with three months and one year ago.</figcaption>
+</figure>
+
+<figure>
+  <h2>The longer record</h2>
+  <img src="drought-basin-timeseries.png" alt="Stacked area chart of percent of Columbia Basin area by drought category, weekly since 2000">
+  <figcaption>Percent of basin area by category, weekly since 2000.</figcaption>
+</figure>
+
+<figure>
+  <h2>Severity and coverage over time</h2>
+  <img src="drought-basin-dsci.png" alt="Drought Severity and Coverage Index for the Columbia Basin over time">
+  <figcaption>DSCI folds extent and severity into a single 0 to 500 scale.
+  Zero means no drought anywhere in the basin; 500 would be the entire basin in D4.</figcaption>
+</figure>
+
+<footer>
+  <p>Data: <a href="https://droughtmonitor.unl.edu/" target="_blank" rel="noreferrer">U.S. Drought Monitor</a>,
+  a joint product of the National Drought Mitigation Center at the University of
+  Nebraska-Lincoln, the U.S. Department of Agriculture, and the National Oceanic and
+  Atmospheric Administration.</p>
+  <p>Figures and code: <a href="https://github.com/GarnicaLab" target="_blank" rel="noreferrer">Garnica Lab</a>,
+  Washington State University. Raw weekly records are in the repository as CSV.</p>
+</footer>
+
+</div>
+</body>
+</html>

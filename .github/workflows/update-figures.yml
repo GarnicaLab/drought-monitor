@@ -1,0 +1,44 @@
+name: Update drought figures
+
+# The U.S. Drought Monitor releases every Thursday morning, Eastern time.
+# This runs Thursday at 16:00 UTC (9 a.m. Pacific), safely after release.
+on:
+  schedule:
+    - cron: "0 16 * * 4"
+  workflow_dispatch:          # lets you run it by hand from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: rocker/tidyverse:4.4.1     # ggplot2, dplyr, tidyr, scales preinstalled
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Mark workspace safe for git
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Install the two extra packages
+        run: install2.r --error --skipinstalled httr jsonlite
+
+      - name: Build the figures
+        env:
+          OUT_DIR: docs
+        run: Rscript R/drought_basin_plots.R
+
+      - name: Commit anything that changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs
+          if git diff --staged --quiet; then
+            echo "No change this week."
+          else
+            git commit -m "Drought figures for $(date -u +%Y-%m-%d)"
+            git push
+          fi
