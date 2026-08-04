@@ -1,0 +1,48 @@
+name: Update publications
+
+# Rebuilds the publication list from ORCID + Crossref on the 1st of each month.
+# Output lands in docs/ :
+#   publications-block.txt   WordPress block markup, paste into the site
+#   publications-recent.txt  the five most recent peer-reviewed, if you want a short list
+#   publications.html        browsable page at /drought-monitor/publications.html
+
+on:
+  schedule:
+    - cron: "0 15 1 * *"      # 1st of the month, 15:00 UTC / 8 a.m. Pacific
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: rocker/tidyverse:4.4.1
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Mark workspace safe for git
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Install the two extra packages
+        run: install2.r --error --skipinstalled httr jsonlite
+
+      - name: Build the publication list
+        env:
+          OUT_DIR: docs
+        run: Rscript R/orcid_publications.R
+
+      - name: Commit anything that changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs
+          if git diff --staged --quiet; then
+            echo "No new publications this month."
+          else
+            git commit -m "Publications refreshed $(date -u +%Y-%m-%d)"
+            git push
+          fi
