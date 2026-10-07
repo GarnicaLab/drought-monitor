@@ -216,7 +216,7 @@ p1 <- ggplot(excl, aes(date, pct, fill = cat)) +
                      expand = expansion(mult = c(0, 0.02))) +
   scale_x_date(date_breaks = "2 years", date_labels = "%Y",
                expand = expansion(mult = c(0.01, 0.01))) +
-  labs(title = paste0("Drought conditions in the ", REGION_NAME),
+  labs(title = "Historical record",
        subtitle = paste0("Percent of land area by U.S. Drought Monitor category, weekly, ",
                          format(min(basin$date), "%Y"), " to present"),
        x = NULL, y = "Percent of basin area", caption = CAPTION) +
@@ -234,9 +234,8 @@ p2 <- ggplot(basin, aes(date, DSCI)) +
   scale_y_continuous(limits = c(0, 500), breaks = seq(0, 500, 100),
                      expand = expansion(mult = c(0.01, 0.06))) +
   scale_x_date(date_breaks = "2 years", date_labels = "%Y") +
-  labs(title = "Drought Severity and Coverage Index",
-       subtitle = paste0(REGION_NAME,
-                         ". DSCI folds extent and severity into a single 0 to 500 scale."),
+  labs(title = "Drought severity and coverage index (DSCI)",
+       subtitle = "DSCI folds extent and severity into a single 0 to 500 scale.",
        x = NULL, y = "DSCI", caption = CAPTION) +
   theme_lab()
 save_png(p2, "drought-basin-dsci.png")
@@ -257,7 +256,7 @@ p3 <- ggplot(cur, aes(when, pct, fill = cat)) +
   geom_col(width = 0.55) + coord_flip() + fill_usdm +
   scale_y_continuous(labels = label_percent(scale = 1), limits = c(0, 100),
                      expand = expansion(mult = c(0, 0.02))) +
-  labs(title = "Columbia Basin drought status",
+  labs(title = "Current status",
        subtitle = paste0("Percent of basin area by category. Week of ",
                          format(latest, "%B %d, %Y"), "."),
        x = NULL, y = "Percent of basin area", caption = CAPTION) +
